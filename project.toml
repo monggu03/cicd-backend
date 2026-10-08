@@ -1,0 +1,5 @@
+# Cloud Run "소스 배포"는 Dockerfile이 없으면 구글 빌드팩으로 이미지를 만듭니다.
+# 이 파일은 빌드팩에게 "자바 21로 빌드해 줘"라고 알려 주는 설정입니다.
+[[build.env]]
+name = "GOOGLE_RUNTIME_VERSION"
+value = "21"

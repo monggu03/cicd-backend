@@ -1,0 +1,41 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '4.1.1'
+    id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.gdgoc'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-webmvc'
+    testImplementation 'org.springframework.boot:spring-boot-starter-actuator-test'
+    testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+    // CI 로그에서 어떤 테스트가 통과/실패했는지 바로 보이게
+    testLogging {
+        events 'passed', 'failed'
+        exceptionFormat = 'full'
+    }
+}
+
+// 실행용 jar(api-0.0.1-SNAPSHOT.jar) 하나만 만들도록 -plain.jar 생성을 끕니다.
+// Cloud Run 빌드팩이 jar가 두 개면 헷갈릴 수 있어서입니다.
+tasks.named('jar') {
+    enabled = false
+}
